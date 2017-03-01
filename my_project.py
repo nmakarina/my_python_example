@@ -6,6 +6,7 @@ import datetime
 from forms import *
 from flask import request
 from gevent.wsgi import WSGIServer
+from gevent import monkey
 import sys
 from settings import SETTINGS as settings1
 
@@ -15,7 +16,7 @@ try:
 except ImportError:
     pass
 
-
+monkey.patch_all()
 
 app = Flask(__name__)
 app.config["MONGODB_SETTINGS"] = {'DB': settings1['DB_NAME']}
@@ -28,7 +29,6 @@ class Message(db.Document):
     send_time = db.DateTimeField(default=datetime.datetime.now, required=True)
     message = db.StringField(max_length=255, required=True)
     user_id = db.StringField(max_length=255, required=True)
-
 
 
 # html for debug
