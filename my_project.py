@@ -3,10 +3,10 @@ from flask import abort
 from flask import make_response
 from flask_mongoengine import MongoEngine
 import datetime
-from forms import *
 from flask import request
 from gevent.wsgi import WSGIServer
 from gevent import monkey
+from jinja2 import Template
 import sys
 from settings import SETTINGS as settings1
 
@@ -34,7 +34,9 @@ class Message(db.Document):
 # html for debug
 @app.route('/<user_id>')
 def form_for_send(user_id):
-    return get_full_html(user_id)
+    html = open('templates/index.html').read()
+    template = Template(html)
+    return template.render(user_id=user_id)
 
 
 # send a request to the server

@@ -1,0 +1,15 @@
+<html>
+   <body>
+      <div>
+         <form action="/api/{{ user_id }}" method="POST">
+         <p>Type a message</p><div><input name="mes_text" type="text" value="New text message"/></div>
+         <div><br><input type="submit" value="Send"/></div></form>
+      </div>
+      <form action="/api/{{ user_id }}" method="GET">
+      <br><br><input type="submit" value="View message list"/></form>
+   </body>
+</html>
+
+
+
+
