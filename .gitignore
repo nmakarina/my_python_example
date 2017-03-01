@@ -1,5 +1,6 @@
 /my_venv/*
 /.idea/*
 settings_local.py
+*.pyc
 
 
