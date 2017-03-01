@@ -7,16 +7,19 @@ from forms import *
 from flask import request
 from gevent.wsgi import WSGIServer
 import sys
+from settings import SETTINGS as settings1
 
 try:
-    from settings_local import *
+    from settings_local import SETTINGS as settings2
+    settings1.update(settings2)
 except ImportError:
-    from settings import *
+    pass
+
 
 
 app = Flask(__name__)
-app.config["MONGODB_SETTINGS"] = {'DB': DB_NAME}
-app.config["SECRET_KEY"] = DB_KEY
+app.config["MONGODB_SETTINGS"] = {'DB': settings1['DB_NAME']}
+app.config["SECRET_KEY"] = settings1['DB_KEY']
 
 db = MongoEngine(app)
 
@@ -53,7 +56,7 @@ def send_request(user_id):
 def get_messages(user_id):
     try:
         now_date_time = datetime.datetime.now()
-        td = now_date_time - TD_PUBLISHED_MES
+        td = now_date_time - settings1['TD_PUBLISHED_MES']
         Message.objects.filter(send_time__lt=td).delete()
         mes = Message.objects.filter(user_id=user_id)
         if len(mes) == 0:
